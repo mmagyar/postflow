@@ -5,6 +5,7 @@ import { EventPluginContext } from '@builder.io/qwik-city/middleware/cloudflare-
 import { KVNamespace } from '@cloudflare/workers-types'
 
 export const onGet: RequestHandler<{data:string},{KV:KVNamespace, env: EventPluginContext['env']}> = async ({platform }) => {
+  console.log(platform)
   const prev = await platform.KV .get('test')
   await platform.KV.put('test', 'test:' + Math.random())
     return {data: prev || "no Data yet"};
