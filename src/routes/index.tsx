@@ -5,8 +5,8 @@ import { EventPluginContext } from '@builder.io/qwik-city/middleware/cloudflare-
 import { KVNamespace } from '@cloudflare/workers-types'
 
 export const onGet: RequestHandler<{data:string},{KV:KVNamespace, env: EventPluginContext['env']}> = async ({platform }) => {
-  console.log(platform)
   const prev = await platform.KV .get('test')
+  console.log(platform)
   await platform.KV.put('test', 'test:' + Math.random())
     return {data: prev || "no Data yet"};
 }
@@ -17,7 +17,7 @@ const productData = useEndpoint<{data:string}>();
   return (
     <div>
       <h1>
-        Welcome to Qwik 34<span class="lightning">⚡️</span>
+        Welcome to Qwik 344xs<span class="lightning">⚡️</span>
       <Resource  value={productData}
         onPending={() => <div>Loading...</div>}
         onRejected={() => <div>Error</div>}
