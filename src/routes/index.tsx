@@ -1,12 +1,30 @@
-import { component$ } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { component$, Resource } from '@builder.io/qwik';
+import { DocumentHead, RequestHandler, useEndpoint } from '@builder.io/qwik-city';
 import { Link } from '@builder.io/qwik-city';
+import { EventPluginContext } from '@builder.io/qwik-city/middleware/cloudflare-pages';
+import { KVNamespace } from '@cloudflare/workers-types'
+
+export const onGet: RequestHandler<{data:string},{KV:KVNamespace, env: EventPluginContext['env']}> = async ({platform }) => {
+  const prev = await platform.KV .get('test')
+  await platform.KV.put('test', 'test:' + Math.random())
+    return {data: prev || "no Data yet"};
+}
 
 export default component$(() => {
+const productData = useEndpoint<{data:string}>();
+
   return (
     <div>
       <h1>
-        Welcome to Qwik <span class="lightning">⚡️</span>
+        Welcome to Qwik 34<span class="lightning">⚡️</span>
+      <Resource  value={productData}
+        onPending={() => <div>Loading...</div>}
+        onRejected={() => <div>Error</div>}
+        onResolved={(product) => (
+          <>
+            <h1>Product: {product.data}</h1>
+          </>)}
+          />
       </h1>
 
       <ul>

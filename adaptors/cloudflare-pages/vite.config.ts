@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       cloudflarePagesAdaptor({
-        staticGenerate: true,
+      //  staticGenerate: true,
       }),
     ],
   };
